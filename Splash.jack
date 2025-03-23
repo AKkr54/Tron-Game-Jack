@@ -1,0 +1,91 @@
+class Splash {
+    function void wall() {
+        // border
+        do Screen.drawRectangle(0,0,5,255);
+        do Screen.drawRectangle(5,0,511,5);
+        do Screen.drawRectangle(5,250,511,255);
+        do Screen.drawRectangle(506,5,511,250);
+        return;
+    }
+    function void text(){
+        do Screen.drawRectangle(50,50,50+10,50+10);
+        do Screen.drawRectangle(60,50,60+10,50+10);
+        do Screen.drawRectangle(70,50,70+10,50+10);
+        do Screen.drawRectangle(80,50,80+10,50+10);
+        do Screen.drawRectangle(90,50,90+10,50+10);
+        do Screen.drawRectangle(100,50,100+10,50+10);
+        do Screen.drawRectangle(110,50,110+10,50+10);
+        do Screen.drawRectangle(120,50,120+10,50+10);
+        do Screen.drawRectangle(130,50,130+10,50+10);
+        do Screen.drawRectangle(90,60,90+10,60+10);
+        do Screen.drawRectangle(90,70,90+10,70+10);
+        do Screen.drawRectangle(90,80,90+10,80+10);
+        do Screen.drawRectangle(90,90,90+10,90+10);
+        do Screen.drawRectangle(90,100,90+10,100+10);
+        do Screen.drawRectangle(90,110,90+10,110+10);
+        do Screen.drawRectangle(90,120,90+10,120+10);
+        do Screen.drawRectangle(90,130,90+10,130+10);
+        do Screen.drawRectangle(90,140,90+10,140+10);
+
+        do Screen.drawRectangle(150,50,150+10,50+10);
+        do Screen.drawRectangle(160,50,160+10,50+10);
+        do Screen.drawRectangle(170,50,170+10,50+10);
+        do Screen.drawRectangle(180,50,180+10,50+10);
+        do Screen.drawRectangle(190,50,190+10,50+10);
+        do Screen.drawRectangle(200,50,200+10,50+10);
+        do Screen.drawRectangle(210,50,210+10,50+10);
+        do Screen.drawRectangle(220,50,220+10,50+10);
+        do Screen.drawRectangle(230,50,230+10,50+10);
+        
+        do Screen.drawRectangle(150,60,150+10,60+10);
+        do Screen.drawRectangle(150,70,150+10,70+10);   
+        do Screen.drawRectangle(150,80,150+10,80+10);
+        do Screen.drawRectangle(150,90,150+10,90+10);
+        do Screen.drawRectangle(150,100,150+10,100+10);
+        do Screen.drawRectangle(150,110,150+10,110+10);
+        do Screen.drawRectangle(150,120,150+10,120+10);
+        do Screen.drawRectangle(150,130,150+10,130+10);
+        do Screen.drawRectangle(150,140,150+10,140+10);
+
+        do Screen.drawRectangle(230,60,230+10,60+10);
+        do Screen.drawRectangle(230,70,230+10,70+10);
+        do Screen.drawRectangle(230,80,230+10,80+10);
+        do Screen.drawRectangle(230,90,230+10,90+10);
+        
+        do Screen.drawRectangle(220,90,220+10,90+10);
+        do Screen.drawRectangle(210,90,210+10,90+10);
+        do Screen.drawRectangle(200,90,200+10,90+10);
+        do Screen.drawRectangle(190,90,190+10,90+10);
+        do Screen.drawRectangle(180,90,180+10,90+10);
+        do Screen.drawRectangle(170,90,170+10,90+10);
+        do Screen.drawRectangle(160,90,160+10,90+10);
+    
+        do Screen.drawRectangle(190,100,200,110);
+        do Screen.drawRectangle(200,110,210,120);
+        do Screen.drawRectangle(210,120,220,130);
+        do Screen.drawRectangle(220,130,230,140);
+        do Screen.drawRectangle(230,140,230+10,140+10);
+
+        do Screen.drawRectangle(250,50,340,60);
+        do Screen.drawRectangle(250,60,260,150);
+        do Screen.drawRectangle(260,140,340,150);
+        do Screen.drawRectangle(330,60,340,140);
+
+        do Screen.drawRectangle(350,50,350+10,150);
+        do Screen.drawRectangle(430,50,440,150);
+
+        do Screen.drawRectangle(360,60,370,70);
+        do Screen.drawRectangle(370,70,380,80);
+        do Screen.drawRectangle(380,80,390,90);
+        do Screen.drawRectangle(390,90,400,100);
+        do Screen.drawRectangle(400,100,410,110);
+        do Screen.drawRectangle(410,110,420,120);
+        do Screen.drawRectangle(420,120,430,130);    
+        
+        do Output.moveCursor(16,15); 
+        do Output.printString("Created By Akash, Devesh and Navneet");
+        do Output.moveCursor(18,21);
+        do Output.printString("( Press Space to Start )");
+        return;
+    }
+}

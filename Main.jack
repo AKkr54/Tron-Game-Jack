@@ -1,0 +1,19 @@
+class Main{
+function void main(){
+var Game g;
+var int key;
+do Splash.wall();
+    do Splash.text();
+    while(true)
+    {
+        let key=Keyboard.keyPressed();
+    if (key=32)
+    {
+        let g=Game.new();
+        do g.game();
+        do Memory.deAlloc(g);
+    }
+    }
+    return;
+}
+}

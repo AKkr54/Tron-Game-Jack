@@ -1,0 +1,82 @@
+class Game{
+    field Square sq1,sq2;
+    field Walls ws;
+    field Array sqx;
+    field boolean run;
+    field int win;
+    field int key;
+    constructor Game new(){
+        do Screen.clearScreen();
+        do Output.moveCursor(10,15);
+        do Output.printString("Ready?");
+        do Sys.wait(1000);
+        do Screen.clearScreen();
+        do Output.moveCursor(10,15);
+        do Output.printInt(3);
+        do Sys.wait(1000);
+        do Output.moveCursor(10,15);
+        do Output.printInt(2);
+        do Sys.wait(1000);
+        do Output.moveCursor(10,15);
+        do Output.printInt(1);
+        do Sys.wait(1000);
+        do Screen.clearScreen();
+        let ws=Walls.new();
+        let sq1=Square.new(30,200);
+        let sq2=Square.new(300,200);
+        return this;
+    }
+    method void game()
+    {
+    let run=true;
+    while(run)
+        { 
+            let key=Keyboard.keyPressed();
+            // do Output.printInt(key);
+            //do Sys.wait(10000);
+            if(((key=131) | (key=133) | (key=130) | (key=132)))
+            {
+                // do Sys.wait(10);
+                do sq1.move(1);
+                let run=sq1.check(sq2,ws);
+            }
+            if(((key=87) | (key=83) | (key=65) | (key=68)))
+            {
+               // do Sys.wait(10);
+                do sq2.move(2);
+                let run=sq2.check(sq1,ws);
+            }
+            do sq1.move(0);
+                    let run=sq1.check(sq2,ws);
+        if(run)
+        {
+            // do Sys.wait(10);
+            do sq2.move(0);
+                    let run=sq2.check(sq1,ws);
+                    // do Sys.wait(1000);
+                    if(~run)
+        {
+            let win=1;
+        }
+        }
+        else{
+               let win=2; 
+        }
+        }
+        if(win=1)
+        {   
+                do Output.moveCursor(10,10);
+                do Screen.clearScreen();
+        do Splash.wall();
+            do Output.printString("Player 1 has won. Press Spacebar to play again.");
+        }
+        if(win=2)
+        {
+                do Output.moveCursor(10,10);
+                do Screen.clearScreen();
+                do Splash.wall();
+            do Output.printString("Player 2 has won. Press Spacebar to play again.");
+        }
+        return;
+    }
+}

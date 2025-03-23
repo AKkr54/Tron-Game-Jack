@@ -1,0 +1,200 @@
+class Square{
+    field Array sqx;
+    field Array sqy;
+    field int x;
+    field int y;
+    field int i;
+    field int prev;
+    constructor Square new(int ax,int ay){
+        let i=0;
+        let prev=131;
+        let sqx=Array.new(1000);
+    let sqy=Array.new(1000);
+       let x= ax;
+       let y= ay;
+       let sqx[0]=x;
+       let sqy[0]=y;
+       do Screen.drawRectangle(x,y,x+5,y+5);
+       return this;
+    }
+    method boolean check(Square ot,Walls ws){
+        var int wi,wx,wy,li,oi,ox,oy;
+        let wi=ws.geti();
+        let li=0;
+        while(li<wi)
+        {
+            let wx=ws.getx(li);
+            let wy=ws.gety(li);
+            if((x=wx) & (y=wy))
+            {
+                return false;
+            }
+            let li=li+1;
+        }
+        let li=0;
+        while(li<i)
+        {
+            if((x=sqx[li]) & (y=sqy[li]))
+            {
+                return false;
+            }
+            let li=li+1;
+
+        }
+        let li=0;
+        let oi=ot.geti();
+        while(li<oi)
+        {
+            let ox=ot.getx(li);
+            let oy=ot.gety(li);
+            if((x=ox) & (y=oy))
+            {
+                return false;
+            }
+            let li=li+1;
+        }
+        return true;
+    }
+method void move(int p){
+    var int key;
+    if(p=1)
+    {
+        let key=Keyboard.keyPressed();
+    if(key=131)
+    {
+        let prev=key;
+        let y=y-5;
+        let i=i+1;
+        let sqx[i]=x;
+        let sqy[i]=y;
+        do Screen.drawRectangle(x,y,x+5,y+5);
+        return;
+    }
+    if(key=133)
+    {
+        let prev=key;
+        let y=y+5;
+        let i=i+1;
+        let sqx[i]=x;
+        let sqy[i]=y;
+        do Screen.drawRectangle(x,y,x+5,y+5); 
+        return;  
+    }
+    if(key=130)
+    {
+        let prev=key;
+        let x=x-5;
+        let i=i+1;
+        let sqx[i]=x;
+        let sqy[i]=y;
+        do Screen.drawRectangle(x,y,x+5,y+5);
+        return;
+    }
+    if(key=132)
+    {
+        let prev=key;
+        let x=x+5;
+        let i=i+1;
+        let sqx[i]=x;
+        let sqy[i]=y;
+        do Screen.drawRectangle(x,y,x+5,y+5);
+        return;
+    }
+    }
+    if(p=2)
+    {
+        let key=Keyboard.keyPressed();
+            let key=Keyboard.keyPressed();
+        if(key=87)
+        {
+            let prev=key;
+            let y=y-5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+        if(key=83)
+        {
+            let prev=key;
+            let y=y+5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5); 
+            return;  
+        }
+        if(key=65)
+        {
+            let prev=key;
+            let x=x-5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+        if(key=68)
+        {
+            let prev=key;
+            let x=x+5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+    }
+    if(p=0)
+    {
+        if((prev=131)|(prev=87))
+        {
+            let y=y-5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+        if((prev=133)|(prev=83))
+        {
+            let y=y+5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+        if((prev=132)|(prev=68))
+        {
+            let x=x+5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+        if((prev=130)|(prev=65))
+        {
+            let x=x-5;
+            let i=i+1;
+            let sqx[i]=x;
+            let sqy[i]=y;
+            do Screen.drawRectangle(x,y,x+5,y+5);
+            return;
+        }
+    }
+return;
+}
+
+method int geti(){
+    return i;
+}
+method int getx(int a){
+    return sqx[a];
+}
+method int gety(int a){
+    return sqy[a];
+}
+}
