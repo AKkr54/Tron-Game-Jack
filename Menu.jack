@@ -1,0 +1,146 @@
+class Menu{
+    static String name1,name2; // stores names of players
+    static int bike1,bike2;
+    function void menu(){
+        var int key;
+        let bike1=1;
+        let bike2=1;
+        let key=0;
+        do Screen.clearScreen();
+        do Screen.setColor(true);
+        do Splash.wall();
+        do Screen.drawLine(255,50,255,240);
+        do Output.moveCursor(2,29);
+        do Output.printString("PLAYER 1");
+        do Output.moveCursor(10,5);
+        let name1=Keyboard.readLine("Enter Name: ");
+        do Output.moveCursor(5,42);
+        do Output.printString("Choose Bike: ");
+        do Output.moveCursor(18,46);
+        do Output.printString("<   >");
+        do Output.moveCursor(20,37);
+        do Output.printString("Press Enter to Proceed");
+        do Menu.bike(bike1);
+        while(~(key=128)) // menu to choose bikes
+        {
+            let key=Keyboard.keyPressed();
+            do Sys.wait(130);
+
+            if(key=132)
+            {
+                if(bike1=3)
+                {
+                    let bike1=1;
+                }
+                else
+                {
+                    let bike1=bike1+1;
+                }
+                do Menu.bike(bike1);
+            }
+            if(key=130)
+            {
+                if(bike1=1)
+                {
+                    let bike1=3;
+                }
+                else
+                {
+                    let bike1=bike1-1;
+                }
+                do Menu.bike(bike1);
+            }
+        }
+        let key=0; // for player 2
+        do Screen.clearScreen();
+        do Screen.setColor(true);
+        do Splash.wall();
+        do Screen.drawLine(255,50,255,240);
+        do Output.moveCursor(2,29);
+        do Output.printString("PLAYER 2");
+        do Output.moveCursor(10,5);
+        do Sys.wait(200);
+        let name2=Keyboard.readLine("Enter Name: ");
+        do Output.moveCursor(5,42);
+        do Output.printString("Choose Bike: ");
+        do Output.moveCursor(18,46);
+        do Output.printString("<   >");
+        do Output.moveCursor(20,37);
+        do Output.printString("Press Enter to Proceed");
+        do Menu.bike(bike2);
+        while(~(key=128))
+        {
+
+            let key=Keyboard.keyPressed();
+            do Sys.wait(130);
+            if(key=132)
+            {
+                if(bike2=4)
+                {
+                    let bike2=1;
+                }
+                else
+                {
+                    let bike2=bike2+1;
+                }
+                do Menu.bike(bike2);
+
+            }
+            if(key=130)
+            {
+                if(bike2=1)
+                {
+                    let bike2=4;
+                }
+                else
+                {
+                    let bike2=bike2-1;
+                }
+                do Menu.bike(bike2);
+            }
+        }
+        return;
+    }
+    function String getname1(){
+        return name1; // returns name of player 1
+    }
+    function String getname2(){
+        return name2; // returns name of player 2
+    }
+    
+    function int getbike1(){
+        return bike1; // returns the bike choice of player 1
+    }
+    function int getbike2(){
+        return bike2; // returns the bike choice of player 2
+    }
+    function void bike(int no){ // to draw bike based on current input on the menu
+        if(no=1)
+        {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(280,80,480,190);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(330,85,330+100,85+100);
+        return;
+        }
+        if(no=2){
+        do Screen.setColor(false);
+        do Screen.drawRectangle(280,80,480,190);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(330,85,330+100,85+100);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(330+10,85+10,330+90,85+90);
+        do Screen.setColor(true);
+        return;
+        }
+        if(no=3){
+        do Screen.setColor(false);
+        do Screen.drawRectangle(280,80,480,190);
+        do Screen.setColor(true);
+        do Screen.drawCircle(380,130,50);
+        do Screen.setColor(true);
+        return;
+        }
+        return;
+    }
+}

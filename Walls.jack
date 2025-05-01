@@ -1,0 +1,62 @@
+class Walls{
+    field Array walls;
+    field int x;
+    field int y;
+    static int i; // stores the number of the wall blocks
+    
+    constructor Walls new(){
+        let i=0; // creates the first block
+        let x=0;
+        let y=20;
+        let walls=Array.new(1000); // creates the array to store the x and y coordinates of all the blocks
+        while(~(x>505)) // creates and stores the top horizontal walls
+        {  
+            let walls[i]=Wall.new(x,y);
+            let x=x+5;
+            let i=i+1;
+        }
+        let x=0;
+        let y=20;
+        while(~(y>250)) // creates and stores the left vertical walls
+        {   
+            let walls[i]=Wall.new(x,y);
+            let y=y+5;
+            let i=i+1;
+        }
+        let x=5;
+        let y=250;
+        while(~(x>505)) // creates and stores the bottom horizontal walls
+        {  
+            let walls[i]=Wall.new(x,y);
+            let x=x+5;
+            let i=i+1;
+        }
+        let x=505;
+        let y=20;
+        while(~(y>250)) // creates and stores the right vertical walls
+        {  
+            let walls[i]=Wall.new(x,y);
+            let y=y+5;
+            let i=i+1;
+        }
+        return this;
+    }
+    method int geti(){
+        return i; // returns the total number of blocks
+    }
+    method int getx(int a){
+        var Wall w;
+        let w=walls[a];
+        return (w.getx()); // returns the x coordinate of the specified wall
+    }
+    method int gety(int a){
+        var Wall w;
+        let w=walls[a];
+        return (w.gety()); // returns the y coordinate of the specified wall
+    }
+    method void dispose(){ // dispose the objects
+        do walls.dispose();
+        do Memory.deAlloc(this);
+        return;
+}
+}

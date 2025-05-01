@@ -1,0 +1,427 @@
+class Bike
+{
+    field Array sqx; // array consisting x coordinates of the square trail blocks
+    field Array sqy; // array consisting y coordinates of the square trail blocks
+    field int x;
+    field int y;
+    field int i;    // stores the number of square blocks
+    field int prev; // stores the previous direction of the square
+    field int ch;
+    field int boostbar;
+    constructor Bike new(int ax, int ay, int num, int cho)
+    {
+        let ch = cho;
+        let i = 0;
+        let boostbar = 0; // boosterbar set to 0 initially
+        if (num = 1)
+        {
+            let prev = 87; // if the square is for the first player, then stores the ascii code of W (up)
+        }
+        else
+        {
+            let prev = 131; // if the square is for the second player, then stores the ascii code of up arrow
+        }
+        let sqx = Array.new(1000); // creates the x coordinate array
+        let sqy = Array.new(1000); // creates the y coordinate array
+        let x = ax;
+        let y = ay;
+        let sqx[0] = x; // stores the coordinates
+        let sqy[0] = y;
+        do drawBike(x, y, ch); // draws the first square block
+        return this;
+    }
+    method boolean check(Bike ot, Walls ws)
+    { // checks if the square has collided with the walls, its own trials or other squares trails
+        var int wi, wx, wy, li, oi, ox, oy;
+        let wi = ws.geti(); // gets the number of wall blocks
+        let li = 0;         // loop variable
+        while ((li < wi))   // runs loop until li = number of wall blocks
+        {
+
+            let wx = ws.getx(li);    // gets the x coordinate of the ith wall block
+            let wy = ws.gety(li);    // gets the y coordinate of the ith wall block
+            if ((x = wx) & (y = wy)) // checks if the current square block has collided the particular wall block ( x and y coordinate is the same?)
+            {
+                return false;
+            }
+            let li = li + 1; // increases the loop variable
+        }
+        let li = 0;      // reassignes loop variable
+        while ((li < i)) // runs loop until the current square block is reached
+        {
+
+            if ((x = sqx[li]) & (y = sqy[li])) // checks if the current square block has collided with its own trial
+            {
+                return false;
+            }
+            let li = li + 1; // increases the loop variable
+        }
+        let li = 0;         // reassigns loop variable
+        let oi = ot.geti(); // gets the number of trail blocks in the other player's square
+        while ((li < oi))   // runs loop until the li = number of trial blocks of other square
+        {
+            let ox = ot.getx(li);    // gets x coordinate of other square
+            let oy = ot.gety(li);    // gets y coordinate of other square
+            if ((x = ox) & (y = oy)) // checks if the current square block has collided with the other squares trial
+            {
+                return false;
+            }
+            let li = li + 1; // increases the loop variable
+        }
+        return true;
+    }
+    method void move(int p, int key, boolean boost,Bike ot,Walls ws)
+    { // moves the current square based on input
+        var int l;
+        if (boost & (boostbar > 0))
+        {                                // if the boost is activated and the boost bar is not empty
+            let boostbar = boostbar - 1; // decreases the boost bar by 1
+        }
+        else
+        {
+            if (boostbar < 100)
+            { // if the boost bar is less than 100
+                let boostbar = boostbar + 1;
+            } // increases the boost bar by 1
+        }
+        if (p = 1) // if the square belongs to the first player
+        {
+            if (key = 87) // if key pressed is W
+            {
+                let prev = key; // updates prev key
+                let y = y - 5;
+                let i = i + 1;
+                let sqx[i] = x; // stores the coordinates
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+			        if(check(ot,ws))
+                    {
+                    return;
+                    }	
+                    let y = y - 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if (key = 83) // if key pressed is S
+            {
+                let prev = key;
+                let y = y + 5;
+                let i = i + 1;
+                let sqx[i] = x; // stores the coordinates
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost) // if boost in activated
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let y = y + 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if (key = 65) // if key pressed is A
+            {
+                let prev = key;
+                let x = x - 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let x = x - 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if (key = 68) // if key pressed is D
+            {
+                let prev = key;
+                let x = x + 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do
+                    drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let x = x + 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+        }
+        if (p = 2) // if the square belongs to the second player
+        {
+            if (key = 131) // if key is up
+            {
+                let prev = key;
+                let y = y - 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let y = y - 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if (key = 133) // if key is down
+            {
+                let prev = key;
+                let y = y + 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let y = y + 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if (key = 130) // if key is left
+            {
+                let prev = key;
+                let x = x - 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }                   
+                    let x = x - 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if (key = 132) // if key is right
+            {
+                let prev = key;
+                let x = x + 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let x = x + 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+        }
+        if (p = 0) // to move both squares
+        {
+            if ((prev = 131) | (prev = 87)) // if prev direction is up
+            {
+                let y = y - 5;
+                let i = i + 1;
+                let sqx[i] = x; // stores the coordinates
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let y = y - 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if ((prev = 133) | (prev = 83)) // if prev direction is down
+            {
+                let y = y + 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let y = y + 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if ((prev = 132) | (prev = 68)) // if prev direction left
+            {
+                let x = x + 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let x = x + 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+            if ((prev = 130) | (prev = 65)) // if prev direction is right
+            {
+                let x = x - 5;
+                let i = i + 1;
+                let sqx[i] = x;
+                let sqy[i] = y;
+                do drawBike(x, y, ch);
+                if (boost)
+                {
+                    if(~(check(ot,ws)))
+                    {
+                    return;
+                    }	
+                    let x = x - 5;
+                    let i = i + 1;
+                    let sqx[i] = x; // stores the coordinates
+                    let sqy[i] = y;
+                    do drawBike(x, y, ch);
+                }
+                return;
+            }
+        }
+        return;
+    }
+    method int geti()
+    {
+        return i;
+    }
+    method int getx(int a)
+    {
+        return sqx[a];
+    }
+    method int gety(int a)
+    {
+        return sqy[a];
+    }
+    method void dispose()
+    {
+        do sqx.dispose();
+        do sqy.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+    method int checkopp(int key)
+    { // checks if the key opints towards the opposite direction
+        if (((key = 133) & (prev = 131)) | ((key = 83) & (prev = 87)))
+        {
+            return prev;
+        }
+        if (((key = 131) & (prev = 133)) | ((key = 87) & (prev = 83)))
+        {
+            return prev;
+        }
+        if (((key = 132) & (prev = 130)) | ((key = 68) & (prev = 65)))
+        {
+            return prev;
+        }
+        if (((key = 130) & (prev = 132)) | ((key = 65) & (prev = 68)))
+        {
+            return prev;
+        }
+        return key;
+    }
+
+    method void drawBike(int x1, int y1, int ch)
+    {
+        var int xd, yd;
+        if (ch = 1) // if first bike is chosen
+        {
+            do Screen.drawRectangle(x1, y1, x1 + 5, y1 + 5);
+            do Screen.setColor(true);
+        }
+        if (ch = 2) // 2nd bike
+        {
+            do Screen.drawRectangle(x1, y1, x1 + 5, y1 + 5);
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x1 + 2, y1 + 2, x1 + 3, y1 + 3);
+            do Screen.setColor(true);
+        }
+        if (ch = 3) //3rd bike
+        {
+            do Screen.drawCircle(x1+3,y1+3,2);
+            do Screen.setColor(true);
+        }
+        return;
+    }
+    
+    method int getboostbar()
+    {
+        return boostbar; // return the boost bar value
+    }
+    
+}

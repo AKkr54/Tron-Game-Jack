@@ -1,0 +1,209 @@
+class Game{
+    field Bike bike1,bike2;
+    field Walls ws;
+    field boolean run,boost1,boost2;
+    field int win;
+    field int key;
+    field int s;
+    field String name1,name2;
+    field int bikec1,bikec2;
+    constructor Game new(){
+        do Screen.clearScreen();
+        do Screen.setColor(true);
+        let ws=Walls.new(); // draws the wall objects
+        let bikec1=Menu.getbike1();
+        let bikec2=Menu.getbike2();
+
+        let bike1=Bike.new(30,150,1,bikec1);
+        let bike2=Bike.new(300,150,2,bikec2);
+    
+        let name1=Menu.getname1();
+        let name2=Menu.getname2();
+        let boost1=false;
+        let boost2=false;
+        do Output.moveCursor(19,3);
+        
+        do Output.printString(name1);
+        do Output.printString(" - Press Q for boost");
+        do Output.moveCursor(19,35);
+        do Output.printString(name2);
+        do Output.printString(" - Press / for boost");
+        do Output.moveCursor(10,15);
+        do Output.printString("Ready?");
+        do Sys.wait(1000);
+        
+        do Output.moveCursor(10,15);
+        do Output.printString("3     ");
+        do Sys.wait(1000);
+        do Output.moveCursor(10,15);
+        do Output.printInt(2);
+        do Sys.wait(1000);
+        do Output.moveCursor(10,15);
+        do Output.printInt(1);
+        do Sys.wait(1000);
+        do Output.moveCursor(10,15);
+        do Output.printString("     "); // erases the text before the game starts
+        do Output.moveCursor(19,3);
+        do Output.printString("                             ");
+        do Output.moveCursor(19,35);
+        do Output.printString("                             ");
+        return this;
+    }
+    method void game()
+    {
+    let run=true;
+    let s=1;
+    while(run)
+    { 
+        let key=Keyboard.keyPressed();
+        if(key=81){
+            let boost1=true;
+            let key=0;
+        }
+        if(bike1.getboostbar()=0)
+        {
+            let boost1=false;
+            let key=0;
+        }
+        if(key=47){
+            let boost2=true;
+            let key=0;
+        }
+        if(bike2.getboostbar()=0)
+        {
+            let boost2=false;
+            let key=0;
+
+        }
+        if(((key=87) | (key=83) | (key=65) | (key=68)))  // checks whether the key pressed is by player 1 so as to change the direction of player 2 square
+        {
+            let key=bike1.checkopp(key); // checks if the pressed direction is opposite so as to make the sqaure move on same path instead of changing direction. if yes, updates the key as previous direction
+            do bike1.move(1,key,boost1,bike2,ws); // moves the square in the specified direction. The first parameter specifies the player and the second is the direction
+            do boostbar(1); // updates boostbar
+            let s=1; // stores the recently moved square number
+            let run=bike1.check(bike2,ws); // checks if this square has colided somewhere. If yes, run is set to zero, so that loop is terminated
+        }
+        if(((key=131) | (key=133) | (key=130) | (key=132))) // same process as the above but for square 2
+        {
+            let key=bike2.checkopp(key);
+            do bike2.move(2,key,boost2,bike1,ws);
+            do boostbar(2);
+            let s=2;
+            let run=bike2.check(bike1,ws);
+        }
+        if(key=0 ) // if no key is pressed 
+        {
+        do bike1.move(0,key,boost1,bike2,ws); //moves the first square
+                        do boostbar(1);
+
+                let run=bike1.check(bike2,ws); // checks if it has collided
+
+                let s=1; 
+        }
+        if(s=1) // if the previously moved square is 1
+        {
+            if(run) // and the previous square has not collided
+            {
+                do bike2.move(0,key,boost2,bike1,ws); // moves the second square for simultaneous
+                do boostbar(2);
+                let run=bike2.check(bike1,ws); // checks if it has collided
+                if(~run)
+                {
+                    let win=1; // square 2 has collided, winner is square 1
+                }
+            }
+            else
+            {
+                let win=2; 
+            }
+        }
+        if(s=2) // if previously oved square is 2
+        {
+            if(run) // if square 2 has not collided
+            {
+                do bike1.move(0,key,boost1,bike2,ws); // moves square 1 in the previous direction
+                do boostbar(1);
+                let run=bike1.check(bike2,ws); // checks if it has collided
+                if(~run)
+                {
+                    let win=2; // if square 1 has collided, winner is player 2
+                }
+            }
+            else
+            {
+                let win=1; 
+            }   
+        } 
+    }
+    if(win=1) // if winner is 1, prints the result 
+    {   
+        do Output.moveCursor(8,11); 
+        do Screen.clearScreen(); // clears the screen of the trails before printing result
+        do Splash.wall(); // retrieves the borders
+        do Output.printString(name1);
+        do Output.printString(" has won. Press Spacebar to play again.");
+    }
+    if(win=2) // if winner is 2, prints the result
+    {
+        do Output.moveCursor(8,11);
+        do Screen.clearScreen(); // clears the screen of the trails before printing result
+        do Splash.wall(); // retrieves the borders
+        do Output.printString(name2);
+        do Output.printString(" has won. Press Spacebar to play again.");
+    }
+    return;
+    }
+
+    method int getscore1()
+    {
+        if(win=1)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    method int getscore2(){
+        if(win=2)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+    method void dispose()
+    { // deallocates the memory of all the objects used
+        do bike1.dispose();
+        do bike2.dispose();
+        do ws.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void boostbar(int n)
+    { // gets booster amt from bike class and updates booster bar
+    var int amt;
+    if(n=1)
+    {
+        let amt=bike1.getboostbar();
+        do Screen.setColor(true);
+        do Screen.drawRectangle(1,1,101,16);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(2,2,100,15);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(1,1,1+amt,16);
+        return;
+    }
+    if(n=2)
+    {
+        let amt=bike2.getboostbar();
+        do Screen.setColor(true);
+        do Screen.drawRectangle(410,1,510,16);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(411,2,509,15);
+        do Screen.setColor(true);
+        do Screen.drawRectangle(410,1,410+amt,16);
+        return;
+    }
+return;
+}
+}

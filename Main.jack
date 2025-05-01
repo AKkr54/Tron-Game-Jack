@@ -1,0 +1,47 @@
+class Main{
+function void main(){
+var Game g;
+var int key;
+var int score1,score2;
+let score1=0;
+let score2=0;
+do Splash.wall(); // draws the border
+    do Splash.text(); // draws the name of the game and the name of the game and the instruction to start the game
+    while((score1<3)&(score2<3))
+    {
+        let key=Keyboard.keyPressed(); 
+    if (key=32) // checks the key pressed and runs the game if the key pressed is space
+    {
+        if((score1=0)&(score2=0))
+        {
+        do Menu.menu();
+        }
+        let g=Game.new(); // creates the game object
+        do g.game(); // runs the game
+        let score1=score1+g.getscore1();
+        let score2=score2+g.getscore2();
+        do Output.moveCursor(10,25);
+        do Output.printString("Scores:");
+        do Output.moveCursor(10,33);
+        do Output.printString(Menu.getname1());
+        do Output.printString(": ");
+        do Output.printInt(score1);
+        do Output.moveCursor(11,33);
+        do Output.printString(Menu.getname2());
+        do Output.printString(": ");
+        do Output.printInt(score2);
+        do g.dispose(); // deallocates the game object memory after the game runs
+    }
+    }
+    do Output.moveCursor(14,17);
+    if(score1>score2){
+        do Output.printString(Menu.getname1());
+        do Output.printString(" has won. Congratulations!!");
+    }
+    else{
+        do Output.printString(Menu.getname2());
+        do Output.printString(" has won. Congratulations!!");
+    }
+    return;
+}
+}

@@ -1,0 +1,25 @@
+class Wall{
+    field int x;  // stores x coordinate of each wall block
+    field int y; // stores y coordinate of each wall block
+    
+    constructor Wall new(int ax,int ay){
+        let x=ax;
+        let y=ay;
+        do draw(); // draws a block with the given coordinates
+        return this;
+    }
+    method void draw(){
+        do Screen.drawRectangle(x,y,x+5,y+5);
+        return;
+    }
+    method int getx(){
+        return x; // returns the x value
+    }
+    method int gety(){
+        return y; // returns the y value
+    }
+    method void dispose(){ // disposes this object
+    do Memory.deAlloc(this);
+    return;
+}
+}
